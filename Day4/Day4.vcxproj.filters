@@ -15,12 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt" />
-    <Text Include="test1.txt" />
-    <Text Include="test2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Day3.cpp">
+    <ClCompile Include="Day4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-
 int calculate_fuel(int mass)
 {
     return (mass / 3) - 2;

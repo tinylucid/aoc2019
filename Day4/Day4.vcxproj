@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{6E6E911C-A7AB-408B-BD43-DC2C249C0BE6}</ProjectGuid>
+    <ProjectGuid>{5E5AA1B6-3FDA-4F43-A818-A9A57562EDE5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Day3</RootNamespace>
+    <RootNamespace>Day4</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -91,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,12 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="input.txt" />
-    <Text Include="test1.txt" />
-    <Text Include="test2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Day3.cpp" />
+    <ClCompile Include="Day4.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
