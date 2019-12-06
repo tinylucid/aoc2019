@@ -8,7 +8,6 @@ std::vector<int> parse_input(std::string& in, char delimiter = ' ')
     std::vector<int> result;
     std::stringstream input_stream(in);
     std::string parsed_number;
-
     while (std::getline(input_stream, parsed_number, delimiter))
     {
         int i = std::stoi(parsed_number);
@@ -17,6 +16,17 @@ std::vector<int> parse_input(std::string& in, char delimiter = ' ')
     return result;
 }
 
+enum Instructions {
+    ADD = 1,
+    MUL,
+    INPUT,
+    PRINT,
+    JNZ,
+    JZ,
+    JL,
+    JE,
+    HALT = 99
+};
 
 int get_instruction_mode(const std::vector<int>& memory, int ip, bool immediate) {
     if (immediate) {
@@ -29,7 +39,6 @@ int get_instruction_mode(const std::vector<int>& memory, int ip, bool immediate)
 void execute_program(std::vector<int>& code, const int input)
 {
     auto ip = code.begin();
-
     while (ip != code.end())
     {
         const int opcode = *(ip++);
@@ -39,11 +48,11 @@ void execute_program(std::vector<int>& code, const int input)
 
         switch (instruction)
         {
-        case 99: // halt
+        case Instructions::HALT:
         {
             return;
         }
-        case 1: // add
+        case Instructions::ADD:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
@@ -51,7 +60,7 @@ void execute_program(std::vector<int>& code, const int input)
             code[opC] = opA + opB;
             break;
         }
-        case 2: // mul
+        case Instructions::MUL:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
@@ -59,28 +68,27 @@ void execute_program(std::vector<int>& code, const int input)
             code[opC] = opA * opB;
             break;
         }
-        case 3: // input
+        case Instructions::INPUT:
         {
             const int opA = *(ip++);
             code[opA] = input;
             break;
         }
-        case 4: // print
+        case Instructions::PRINT:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             std::cout << opA << std::endl;
             break;
         }
-        case 5: // jump if not zero
+        case Instructions::JNZ:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
             if (opA != 0)
                 ip = code.begin() + opB;
-
             break;
         }
-        case 6: // jump if zero
+        case Instructions::JZ:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
@@ -88,31 +96,27 @@ void execute_program(std::vector<int>& code, const int input)
                 ip = code.begin() + opB;
             break;
         }
-        case 7: // less than
+        case Instructions::JL:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
             const int opC = *(ip++);
-            if (opA < opB)
-                code[opC] = 1;
-            else
-                code[opC] = 0;
+            code[opC] = (opA < opB) ? 1 : 0;
             break;
         }
-        case 8:
+        case Instructions::JE:
         {
             const int opA = get_instruction_mode(code, *(ip++), mode_for_opA);
             const int opB = get_instruction_mode(code, *(ip++), mode_for_opB);
             const int opC = *(ip++);
-            if (opA == opB)
-                code[opC] = 1;
-            else
-                code[opC] = 0;
+            code[opC] = (opA == opB) ? 1 : 0;
             break;
         }
         default:
+        {
             throw std::exception{ "intruction with wrong opcode " };
         }
+        } // end of switch statement
     }
 }
 
@@ -121,17 +125,22 @@ int main()
     std::ifstream file_stream("input.txt");
     std::string main_input((std::istreambuf_iterator<char>(file_stream)),
         (std::istreambuf_iterator<char>()));
-
     std::vector<int> main_program = parse_input(main_input, ',');
 
-    //execute_program(main_program, 1); // part 1
-    execute_program(main_program, 5); // part 2
-
-#if (0)
+#if (0) // used for debugging
     for (auto const& value : main_program)
     {
         std::cout << value << " ";
     }
 #endif
+    int user_input;
+    std::cout << "Please enter input for your program" << std::endl;
+    if (!(std::cin >> user_input))
+    {
+        std::cout << "Bad user input! Restart the program and try again." << std::endl;
+        std::cin.clear();
+    }
+    // [p1]: insert 1; [p2]: insert 5;
+    execute_program(main_program, user_input); // part 2
     return 0;
 }
