@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 
+#define PRINT_VECTOR(iterable) for (auto const& iter : iterable) { std::cout << iter << " "; } std::cout << std::endl; 
+
 std::vector<int> parse_input(std::string& in, char delimiter = ' ')
 {
     std::vector<int> result;
@@ -120,6 +122,7 @@ void execute_program(std::vector<int>& code, const int input)
     }
 }
 
+
 int main()
 {
     std::ifstream file_stream("input.txt");
@@ -127,12 +130,8 @@ int main()
         (std::istreambuf_iterator<char>()));
     std::vector<int> main_program = parse_input(main_input, ',');
 
-#if (0) // used for debugging
-    for (auto const& value : main_program)
-    {
-        std::cout << value << " ";
-    }
-#endif
+    PRINT_VECTOR(main_program);
+
     int user_input;
     std::cout << "Please enter input for your program" << std::endl;
     if (!(std::cin >> user_input))
