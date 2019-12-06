@@ -30,10 +30,11 @@ enum Instructions {
     HALT = 99
 };
 
-int get_instruction_mode(const std::vector<int>& memory, int ip, bool immediate) {
-    if (immediate) {
+int get_instruction_mode(const std::vector<int>& memory, int ip, bool immediate)
+{
+    if (immediate)
         return ip;
-    }
+
     return memory[ip];
 }
 
