@@ -2,6 +2,10 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <array>
+#include <optional>
+#include <unordered_map>
+#include <deque>
 
 #define PRINT_VECTOR(iterable) for (auto const& iter : iterable) { std::cout << iter << " "; } std::cout << std::endl; 
 
@@ -123,6 +127,17 @@ void execute_program(std::vector<int>& code, const int input)
     }
 }
 
+int run_amp(std::vector<int>& program, const std::vector<int>& phase_setting)
+{
+    int amp_signal = 0;
+    for (int amp = 0; amp < 5; amp++)
+    {
+        execute_program(program, phase_setting[amp]);
+        // storing output of amp A as input for amp B
+        // then output of amp B as input of amp C ...
+    }
+}
+
 
 int main()
 {
@@ -130,17 +145,13 @@ int main()
     std::string main_input((std::istreambuf_iterator<char>(file_stream)),
         (std::istreambuf_iterator<char>()));
     std::vector<int> main_program = parse_input(main_input, ',');
+    std::vector<int> phases{ 0, 1, 2, 3, 4 };
+    //auto max_out = std::numeric_limits<int>::min();
 
     PRINT_VECTOR(main_program);
+    auto result = run_amp(main_program, phases);
+    // part 1
 
-    int user_input;
-    std::cout << "Please enter input for your program" << std::endl;
-    if (!(std::cin >> user_input))
-    {
-        std::cout << "Bad user input! Restart the program and try again." << std::endl;
-        std::cin.clear();
-    }
-    // [p1]: insert 1; [p2]: insert 5;
-    execute_program(main_program, user_input);
+    std::cout << result << std::endl;
     return 0;
 }
